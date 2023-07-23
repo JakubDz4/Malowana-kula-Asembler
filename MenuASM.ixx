@@ -26,76 +26,6 @@ public:
 		clear();
 	}
 
-	//delete wisualizuje
-	void collision_Point_test(Ball& ball, double Wx, double Wy, double W2x, double W2y)
-	{
-		//Wektor A i B
-		double Ax = ball.pos.x - Wx;
-		double Ay = ball.pos.y - Wy;
-		double Bx = W2x - Wx;
-		double By = W2y - Wy;
-
-		//projection A on B
-		double proj = (Ax * Bx + Ay * By) / (Bx * Bx + By * By);
-		//POint closest to ball
-		double Cx = proj * Bx + Wx;
-		double Cy = proj * By + Wy;
-
-		//make sure taht C point is on line
-		if (Cx >= std::max(Wx, W2x))
-		{
-			Cx = std::max(Wx, W2x);
-		}
-		else if (Cx <= std::min(Wx, W2x))
-		{
-			Cx = std::min(Wx, W2x);
-		}
-		if (Cy >= std::max(Wy, W2y))
-		{
-			Cy = std::max(Wy, W2y);
-		}
-		else if (Cy <= std::min(Wy, W2y))
-		{
-			Cy = std::min(Wy, W2y);
-		}
-
-		//Make sure that distance between pos and C is lower than radius
-		if (ball.rad * ball.rad >= (Cx - ball.pos.x) * (Cx - ball.pos.x) + (Cy - ball.pos.y) * (Cy - ball.pos.y))
-		{
-			SDL_SetRenderDrawColor(renderer, 0xff, 0, 0, 0x00);
-			for (int w = 0; w < 4 * 2; w++)
-			{
-				for (int h = 0; h < 4 * 2; h++)
-				{
-					int dx = 4 - w; // horizontal offset
-					int dy = 4 - h; // vertical offset
-					if ((dx * dx + dy * dy) <= (4 * 4))
-					{
-						SDL_RenderDrawPoint(renderer, Cx + dx, Cy + dy);
-					}
-				}
-			}
-		}
-		else
-		{
-			SDL_SetRenderDrawColor(renderer, 0xff, 0xff, 0, 0x00);
-			for (int w = 0; w < 10 * 2; w++)
-			{
-				for (int h = 0; h < 10 * 2; h++)
-				{
-					int dx = 10 - w; // horizontal offset
-					int dy = 10 - h; // vertical offset
-					if ((dx * dx + dy * dy) <= (10 * 10))
-					{
-						SDL_RenderDrawPoint(renderer, Cx + dx, Cy + dy);
-					}
-				}
-			}
-		}
-
-
-	}
-
 	bool init(std::vector<Ball>& ba, std::vector<Block>& bl, SDL_Window* _window, SDL_Renderer* _renderer)
 	{
 		balls = ba;
@@ -210,11 +140,11 @@ public:
 
 	void clear()
 	{
-		/*SDL_DestroyRenderer(renderer);
+		SDL_DestroyRenderer(renderer);
 		SDL_DestroyWindow(window);
 		window = NULL;
-		renderer = NULL;*/
+		renderer = NULL;
 
-		//SDL_Quit();
+		SDL_Quit();
 	}
 };
